@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pulse-bot
+  labels:
+    app: pulse-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pulse-bot
+  template:
+    metadata:
+      labels:
+        app: pulse-bot
+    spec:
+      containers:
+        - name: pulse-bot
+          image: localhost:32000/pulse-bot:latest
+          env:
+            - name: "ENV_VAR"
+              value: "envValue"
+            - name: PULSE_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: pulse-bot-token
+                  key: PULSE_BOT_TOKEN
